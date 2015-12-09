@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Surf\'s Up</string>
+    <string name="campus_one_1st_floor">1ый этаж 1го кампуса </string>
+    <string name="campus_one_2nd_floor">2ой этаж 1го кампуса</string>
+    <string name="campus_one_3rd_floor">3ий этаж 1го кампуса</string>
+    <string name="campus_one_4th_floor">4ый этаж 1го кампуса</string>
+    <string name="campus_two_1st_floor">1ый этаж 2го кампуса</string>
+    <string name="campus_two_2nd_floor">2ой этаж 2го кампуса</string>
+    <string name="campus_two_3rd_floor">3ий этаж 2го кампуса</string>
+    <string name="campus_two_4th_floor">4ый этаж 2го кампуса</string>
+</resources>
