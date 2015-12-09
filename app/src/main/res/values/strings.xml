@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Surf\'s Up</string>
+    <string name="campus_one_1st_floor">1st campus 1st floor</string>
+    <string name="campus_one_2nd_floor">1st campus 2nd floor</string>
+    <string name="campus_one_3rd_floor">1st campus 3rd floor</string>
+    <string name="campus_one_4th_floor">1st campus 4th floor</string>
+    <string name="campus_two_1st_floor">2nd campus 1st floor</string>
+    <string name="campus_two_2nd_floor">2nd campus 2nd floor</string>
+    <string name="campus_two_3rd_floor">2nd campus 3rd floor</string>
+    <string name="campus_two_4th_floor">2nd campus 4th floor</string>
 </resources>
