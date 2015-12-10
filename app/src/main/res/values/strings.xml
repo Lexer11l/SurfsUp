@@ -8,4 +8,7 @@
     <string name="campus_two_2nd_floor">2nd campus 2nd floor</string>
     <string name="campus_two_3rd_floor">2nd campus 3rd floor</string>
     <string name="campus_two_4th_floor">2nd campus 4th floor</string>
+    <string name="message">Bottles are empty: </string>
+    <string name="fill">Please refill the bottles</string>
+    <string name="con_lost">Connection is lost</string>
 </resources>

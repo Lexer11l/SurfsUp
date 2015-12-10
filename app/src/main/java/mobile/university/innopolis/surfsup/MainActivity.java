@@ -9,16 +9,18 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private ListView list;
@@ -28,51 +30,64 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* ArrayList<Bottle> bottles = new ArrayList<>();
-        bottles.add(new Bottle(1,4));
-        bottles.add(new Bottle(2,3));
-        bottles.add(new Bottle(3, 2));
-        bottles.add(new Bottle(4, 1));*/
-        startService(new Intent(this, NotificationService.class));
-
         list = (ListView) findViewById(R.id.listView);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
+        Timer timer = new Timer();
+        //execute refreshing of data every 5 mins
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                final AsyncTask<Void, Void, ArrayList<Bottle>> execute = new AsyncTask<Void, Void, ArrayList<Bottle>>() {
+                    @Override
+                    protected ArrayList<Bottle> doInBackground(Void... params) {
+                        try {
+                            ArrayList<Bottle> bottles = (ArrayList<Bottle>) (new ParseServerData()).getCoolerInfo();
+                            return bottles;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(ArrayList<Bottle> bottles) {
+                        super.onPostExecute(bottles);
+                        //Checking network connection
+                        ConnectivityManager connectivity = (ConnectivityManager) mContext
+                                .getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo activeNetworkInfo = connectivity.getActiveNetworkInfo();
+                        list.setAdapter(new BottleAdapter(bottles));
+                        Intent intent = new Intent(MainActivity.this, NotificationService.class);
+                        ArrayList<String> floors = new ArrayList<>();
+                        for (Bottle b:bottles){
+                            if (b.value.equals("SDDSD"))
+                                floors.add(b.value);
+                        }
+                        intent.putExtra("floors", floors);
+                        if (floors.size()>0)
+                        {
+                            startService(intent);
+                            floors.clear();
+                        }
+                    }
+                }.execute();            }
+        }, 0, 300000);
         NetworkConnectionReceiver receiver = new NetworkConnectionReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(receiver, filter);
         mContext = this;
+        registerReceiver(receiver, filter);
 
-        new AsyncTask<Void, Void, ArrayList<Bottle>>() {
-            @Override
-            protected ArrayList<Bottle> doInBackground(Void... params) {
-                try {
-                    ArrayList<Bottle> bottles = (ArrayList<Bottle>) (new ParseServerData()).getCoolerInfo();
-                    return bottles;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(ArrayList<Bottle> bottles) {
-                super.onPostExecute(bottles);
-                Log.i("SIZELOC", "" + bottles.size());
-
-                //Checking network connection
-                ConnectivityManager connectivity = (ConnectivityManager) mContext
-                        .getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetworkInfo = connectivity.getActiveNetworkInfo();
-                //if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
-                    //list.setAdapter(new BottleAdapter(bottles));
-                    showAllMarkers(bottles);
-                }
-        }.execute();
     }
 
-    public void showAllMarkers(ArrayList<Bottle> bottles) {
-        list.setAdapter(new BottleAdapter(bottles));
-    }
 
     private class BottleAdapter implements ListAdapter {
         private ArrayList<Bottle> bottles;

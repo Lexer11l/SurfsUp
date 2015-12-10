@@ -1,14 +1,16 @@
 package mobile.university.innopolis.surfsup;
 
 /**
- * Created by Kirill on 10.12.2015.
+ * Created by Kirill
  */
 public class Bottle {
 
     public String raspId;
     public String value;
 
+    //returns ID of string by ID of rasp to display message
     public int getID() {
+
     /*    switch (raspId){
             case "0": return R.string.campus_one_1st_floor;
 
@@ -32,11 +34,12 @@ public class Bottle {
         return R.string.campus_two_4th_floor;
     }
 
+    //returns value of water in bottle
     public int getLevel() {
         switch (value){
             case "0": return R.drawable.empty;
 
-            case "1": return R.drawable.low;
+            case "SDDSD": return R.drawable.low;
 
             case "14": return R.drawable.half;
 

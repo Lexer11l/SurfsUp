@@ -10,14 +10,13 @@ import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
 
 /**
- * Created by Kirill on 10.12.2015.
+ * Created by Kirill
  */
 public class NotificationService extends Service {
-
+    static ArrayList<String> floors;
     @Override
     public void onCreate() {
 // TODO Auto-generated method stub
@@ -27,13 +26,8 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 // TODO Auto-generated method stub
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Notification();
-            }
-        }, 120000, 180000);
+        floors = intent.getStringArrayListExtra("floors");
+        Notification(floors);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -49,12 +43,12 @@ public class NotificationService extends Service {
         return null;
     }
 
-    private void Notification() {
+    private void Notification(ArrayList<String> floors) {
         NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setContentTitle("EmotionMap")
-                .setContentText("Share your emotion! Come on!")
+                .setContentTitle("Surf's Up")
+                .setContentText(getText(R.string.message) + " "+ floors) //says on which floors bottles are empty
                 .setAutoCancel(true)
-                .setTicker("Share your emotion!")
+                .setTicker(getText(R.string.fill))
                 .setSmallIcon(R.mipmap.ic_launcher);
 
         Intent intent = new Intent(this, MainActivity.class);

@@ -1,7 +1,5 @@
 package mobile.university.innopolis.surfsup;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import org.apache.http.Header;
@@ -13,14 +11,14 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by Kirill on 10.12.2015.
+ * Created by Kirill
  */
+
+@SuppressWarnings("ALL")
 public class ParseServerData {
 
     private static final String API_KEY = "DACNh74aTCEWWtZcKhNMDjN7Ogtu4kvQxBBjLlvi";
@@ -36,6 +34,7 @@ public class ParseServerData {
     public List<Bottle> getCoolerInfo() throws Exception {
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
+
         String url = "https://api.parse.com/1/classes/Values/";
         Bottles bottles = new Bottles();
 
@@ -43,22 +42,11 @@ public class ParseServerData {
         for (Header header : getHeaders()) {
             httpGet.addHeader(header);
         }
-        //httpGet.addHeader("X-Parse-Session-Token", auth); // taken from https://parse.com/questions/how-long-before-the-sessiontoken-expires
 
         try {
             HttpResponse response = httpClient.execute(httpGet);
-
             String responseString = EntityUtils.toString(response.getEntity());
-            Log.i("STORKA", responseString);
-
-            if (response.getStatusLine().getStatusCode() != HttpURLConnection.HTTP_OK) {
-                /*ParseComServer.ParseComError error = new Gson()
-                        .fromJson(responseString, ParseComServer.ParseComError.class);
-                throw new Exception("Error retrieving ["+error.code+"] - " + error.error);*/
-            }
-
             bottles = new Gson().fromJson(responseString, Bottles.class);
-            //return locations.results;
 
         } catch (IOException e) {
             e.printStackTrace();

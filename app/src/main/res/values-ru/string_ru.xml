@@ -9,4 +9,7 @@
     <string name="campus_two_2nd_floor">2ой этаж 2го кампуса</string>
     <string name="campus_two_3rd_floor">3ий этаж 2го кампуса</string>
     <string name="campus_two_4th_floor">4ый этаж 2го кампуса</string>
+    <string name="message">Вода закончилась в кулерах: </string>
+    <string name="fill">Пожалуйста замените воду</string>
+    <string name="con_lost">Нет соединения</string>
 </resources>
