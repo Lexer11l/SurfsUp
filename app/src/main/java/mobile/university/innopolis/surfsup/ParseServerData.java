@@ -1,5 +1,7 @@
 package mobile.university.innopolis.surfsup;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import org.apache.http.Header;
@@ -47,6 +49,7 @@ public class ParseServerData {
             HttpResponse response = httpClient.execute(httpGet);
 
             String responseString = EntityUtils.toString(response.getEntity());
+            Log.i("STORKA", responseString);
 
             if (response.getStatusLine().getStatusCode() != HttpURLConnection.HTTP_OK) {
                 /*ParseComServer.ParseComError error = new Gson()

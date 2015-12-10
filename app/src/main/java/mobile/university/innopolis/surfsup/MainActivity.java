@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<Bottle> bottles = new ArrayList<>();
-        startService(new Intent(this, NotificationService.class));
+       /* ArrayList<Bottle> bottles = new ArrayList<>();
         bottles.add(new Bottle(1,4));
         bottles.add(new Bottle(2,3));
-        bottles.add(new Bottle(3,2));
-        bottles.add(new Bottle(4,1));
+        bottles.add(new Bottle(3, 2));
+        bottles.add(new Bottle(4, 1));*/
+        startService(new Intent(this, NotificationService.class));
+
         list = (ListView) findViewById(R.id.listView);
         NetworkConnectionReceiver receiver = new NetworkConnectionReceiver();
         IntentFilter filter = new IntentFilter();
@@ -55,20 +57,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(ArrayList<Bottle> bottles) {
                 super.onPostExecute(bottles);
+                Log.i("SIZELOC", "" + bottles.size());
 
                 //Checking network connection
                 ConnectivityManager connectivity = (ConnectivityManager) mContext
                         .getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo activeNetworkInfo = connectivity.getActiveNetworkInfo();
-                if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
-                    list.setAdapter(new BottleAdapter(bottles));
+                //if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
+                    //list.setAdapter(new BottleAdapter(bottles));
+                    showAllMarkers(bottles);
                 }
         }.execute();
     }
 
     public void showAllMarkers(ArrayList<Bottle> bottles) {
         list.setAdapter(new BottleAdapter(bottles));
-
     }
 
     private class BottleAdapter implements ListAdapter {
