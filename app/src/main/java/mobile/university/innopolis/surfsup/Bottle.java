@@ -11,27 +11,26 @@ public class Bottle {
     //returns ID of string by ID of rasp to display message
     public int getID() {
 
-    /*    switch (raspId){
-            case "0": return R.string.campus_one_1st_floor;
+        switch (raspId){
+            case "c1f1": return R.string.campus_one_1st_floor;
 
-            case "1": return R.string.campus_one_2nd_floor;
+            case "c1f2": return R.string.campus_one_2nd_floor;
 
-            case "2": return R.string.campus_one_3rd_floor;
+            case "c1f3": return R.string.campus_one_3rd_floor;
 
-            case "3": return R.string.campus_one_4th_floor;
+            case "c1f4": return R.string.campus_one_4th_floor;
 
-            case "4": return R.string.campus_two_1st_floor;
+            case "c2f1": return R.string.campus_two_1st_floor;
 
-            case "5": return R.string.campus_two_2nd_floor;
+            case "c2f2": return R.string.campus_two_2nd_floor;
 
-            case "6": return R.string.campus_two_3rd_floor;
+            case "c2f3": return R.string.campus_two_3rd_floor;
 
-            case "7": return R.string.campus_two_4th_floor;
+            case "c2f4": return R.string.campus_two_4th_floor;
 
             default: return 0;
 
-        }*/
-        return R.string.campus_two_4th_floor;
+        }
     }
 
     //returns value of water in bottle
