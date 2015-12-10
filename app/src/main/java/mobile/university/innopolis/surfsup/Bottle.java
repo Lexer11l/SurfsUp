@@ -11,7 +11,7 @@ public class Bottle {
     //returns ID of string by ID of rasp to display message
     public int getID() {
 
-        switch (raspId){
+        switch (raspId.toLowerCase()){
             case "c1f1": return R.string.campus_one_1st_floor;
 
             case "c1f2": return R.string.campus_one_2nd_floor;
@@ -28,14 +28,14 @@ public class Bottle {
 
             case "c2f4": return R.string.campus_two_4th_floor;
 
-            default: return 0;
+            default: return R.string.no_such_id;
 
         }
     }
 
     //returns value of water in bottle
     public int getLevel() {
-        switch (value){
+        switch (value.toLowerCase()){
             case "empty": return R.drawable.empty;
 
             case "low": return R.drawable.low;
