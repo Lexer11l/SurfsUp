@@ -36,15 +36,15 @@ public class Bottle {
     //returns value of water in bottle
     public int getLevel() {
         switch (value){
-            case "0": return R.drawable.empty;
+            case "empty": return R.drawable.empty;
 
-            case "SDDSD": return R.drawable.low;
+            case "low": return R.drawable.low;
 
-            case "14": return R.drawable.half;
+            case "half": return R.drawable.half;
 
-            case "3": return R.drawable.high;
+            case "high": return R.drawable.high;
 
-            case "4": return R.drawable.full;
+            case "full": return R.drawable.full;
 
             default: return R.drawable.empty;
         }
