@@ -11,4 +11,5 @@
     <string name="message">Bottles are empty: </string>
     <string name="fill">Please refill the bottles</string>
     <string name="con_lost">Connection is lost</string>
+    <string name="no_such_id">Undefined ID</string>
 </resources>
