@@ -12,4 +12,5 @@
     <string name="message">Вода закончилась в кулерах: </string>
     <string name="fill">Пожалуйста замените воду</string>
     <string name="con_lost">Нет соединения</string>
+    <string name="no_such_id">Неопознанный кулер</string>
 </resources>
