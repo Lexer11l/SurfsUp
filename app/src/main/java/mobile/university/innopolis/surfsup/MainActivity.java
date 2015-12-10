@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<String> floors = new ArrayList<>();
                         for (Bottle b:bottles){
                             if (b.value.equals("empty")||b.value.equals("low"))
-                                floors.add(b.getID());
+                                floors.add(getText(b.getID()));
                         }
                         intent.putExtra("floors", floors);
                         if (floors.size()>0)
