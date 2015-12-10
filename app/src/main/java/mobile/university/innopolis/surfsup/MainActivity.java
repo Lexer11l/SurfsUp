@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class MainActivity extends AppCompatActivity {
     private ListView list;
     private Context mContext;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<String> floors = new ArrayList<>();
                         for (Bottle b:bottles){
                             if (b.value.equals("empty")||b.value.equals("low"))
-                                floors.add(getText(b.getID()));
+                                floors.add((String)getText(b.getID()));
                         }
                         intent.putExtra("floors", floors);
                         if (floors.size()>0)

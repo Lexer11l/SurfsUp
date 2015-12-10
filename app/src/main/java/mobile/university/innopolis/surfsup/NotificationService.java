@@ -50,6 +50,15 @@ public class NotificationService extends Service {
                 .setAutoCancel(true)
                 .setTicker(getText(R.string.fill))
                 .setSmallIcon(R.mipmap.ic_launcher);
+        NotificationCompat.InboxStyle inboxStyle =
+                new NotificationCompat.InboxStyle();
+        inboxStyle.setBigContentTitle(getText(R.string.fill));
+        for (String b : floors) {
+            inboxStyle.addLine(b);
+        }
+// Moves the expanded layout object into the notification object.
+        builder.setStyle(inboxStyle);
+
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pending = PendingIntent.getActivity(this, 0, intent, 0);
