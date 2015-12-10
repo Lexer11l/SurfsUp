@@ -1,6 +1,12 @@
 package mobile.university.innopolis.surfsup;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.DataSetObserver;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,71 +21,54 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ListView list;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ArrayList<Bottle> bottles = new ArrayList<>();
+        startService(new Intent(this, NotificationService.class));
         bottles.add(new Bottle(1,4));
         bottles.add(new Bottle(2,3));
         bottles.add(new Bottle(3,2));
         bottles.add(new Bottle(4,1));
         list = (ListView) findViewById(R.id.listView);
-        list.setAdapter(new BottleAdapter(bottles));
+        NetworkConnectionReceiver receiver = new NetworkConnectionReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(receiver, filter);
+        mContext = this;
 
+        new AsyncTask<Void, Void, ArrayList<Bottle>>() {
+            @Override
+            protected ArrayList<Bottle> doInBackground(Void... params) {
+                try {
+                    ArrayList<Bottle> bottles = (ArrayList<Bottle>) (new ParseServerData()).getCoolerInfo();
+                    return bottles;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(ArrayList<Bottle> bottles) {
+                super.onPostExecute(bottles);
+
+                //Checking network connection
+                ConnectivityManager connectivity = (ConnectivityManager) mContext
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetworkInfo = connectivity.getActiveNetworkInfo();
+                if (activeNetworkInfo != null && activeNetworkInfo.isConnected())
+                    list.setAdapter(new BottleAdapter(bottles));
+                }
+        }.execute();
     }
 
+    public void showAllMarkers(ArrayList<Bottle> bottles) {
+        list.setAdapter(new BottleAdapter(bottles));
 
-    private class Bottle {
-
-        private int ID;
-        private int level;
-
-        public int getID() {
-            switch (ID){
-                case 0: return R.string.campus_one_1st_floor;
-
-                case 1: return R.string.campus_one_2nd_floor;
-
-                case 2: return R.string.campus_one_3rd_floor;
-
-                case 3: return R.string.campus_one_4th_floor;
-
-                case 4: return R.string.campus_two_1st_floor;
-
-                case 5: return R.string.campus_two_2nd_floor;
-
-                case 6: return R.string.campus_two_3rd_floor;
-
-                case 7: return R.string.campus_two_4th_floor;
-
-                default: return 0;
-
-            }
-        }
-
-        public int getLevel() {
-            switch (level){
-                case 0: return R.drawable.empty;
-
-                case 1: return R.drawable.low;
-
-                case 2: return R.drawable.half;
-
-                case 3: return R.drawable.high;
-
-                case 4: return R.drawable.full;
-
-                default: return 0;
-            }
-
-        }
-
-        public Bottle(int ID, int level) {
-            this.ID = ID;
-            this.level = level;
-        }
     }
 
     private class BottleAdapter implements ListAdapter {
