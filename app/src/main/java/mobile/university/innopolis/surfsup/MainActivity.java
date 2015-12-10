@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, NotificationService.class);
                         ArrayList<String> floors = new ArrayList<>();
                         for (Bottle b:bottles){
-                            if (b.value.equals("SDDSD"))
-                                floors.add(b.value);
+                            if (b.value.equals("empty")||b.value.equals("low"))
+                                floors.add(b.getID());
                         }
                         intent.putExtra("floors", floors);
                         if (floors.size()>0)
